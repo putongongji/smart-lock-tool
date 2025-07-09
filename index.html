@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>换锁</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 头部信息 -->
+        <div class="header">
+            <h1>换锁</h1>
+        </div>
+
+        <!-- 当前锁信息 -->
+        <div class="lock-info">
+            <div class="lock-card">
+                <div class="lock-header">
+                    <h3>当前锁信息</h3>
+                </div>
+                <div class="lock-details">
+                    <div class="detail-row">
+                        <div class="detail-item">
+                            <span class="label">序列号:</span>
+                            <span class="value">SL2024001234</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">设备ID:</span>
+                            <span class="value">DEV_ABC123456</span>
+                        </div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-item">
+                            <span class="label">型号:</span>
+                            <span class="value">智能锁 Pro Max</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">位置:</span>
+                            <span class="value">朝阳区某小区1-101</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 工作流程 -->
+        <div class="workflow-container">
+            <!-- 步骤1: 备份数据 -->
+            <div class="step-card" id="step1">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <h3>备份数据</h3>
+                    <div class="step-status" id="status1">待执行</div>
+                </div>
+                <div class="step-content">
+                    <div class="backup-info">
+                        <div class="key-count">
+                            <div class="count-item">
+                                <span class="count-label">房东钥匙:</span>
+                                <span class="count-value" id="landlordKeys">3</span>
+                            </div>
+                            <div class="count-item">
+                                <span class="count-label">用户钥匙:</span>
+                                <span class="count-value" id="userKeys">5</span>
+                            </div>
+                            <div class="count-item">
+                                <span class="count-label">共管员钥匙:</span>
+                                <span class="count-value" id="adminKeys">2</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step-actions">
+                        <button class="btn btn-primary" onclick="startBackup()" id="backupBtn">开始备份</button>
+                    </div>
+                    <div class="progress-info" id="backupProgress" style="display: none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="backupProgressFill"></div>
+                        </div>
+                        <div class="progress-text" id="backupProgressText">备份中...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 步骤2: 解绑旧锁 -->
+            <div class="step-card" id="step2">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <h3>解绑旧锁</h3>
+                    <div class="step-status" id="status2">等待中</div>
+                </div>
+                <div class="step-content">
+                    <div class="step-actions">
+                        <button class="btn btn-primary" onclick="startUnbind()" id="unbindBtn" disabled>开始解绑</button>
+                    </div>
+                    <div class="progress-info" id="unbindProgress" style="display: none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="unbindProgressFill"></div>
+                        </div>
+                        <div class="progress-text" id="unbindProgressText">解绑中...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 步骤3: 绑定新锁 -->
+            <div class="step-card" id="step3">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <h3>绑定新锁</h3>
+                    <div class="step-status" id="status3">等待中</div>
+                </div>
+                <div class="step-content">
+                    <div class="input-group">
+                        <label>新锁序列号:</label>
+                        <div class="input-with-scan">
+                            <input type="text" id="newLockSerial" placeholder="扫描二维码获取" readonly>
+                            <button class="btn btn-scan" onclick="scanQRCode()">扫描</button>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>设备ID:</label>
+                        <div class="input-with-scan">
+                            <input type="text" id="newDeviceId" placeholder="蓝牙搜索获取" readonly>
+                            <button class="btn btn-scan" onclick="searchBluetooth()">搜索</button>
+                        </div>
+                    </div>
+                    <div class="device-list" id="deviceList" style="display: none;">
+                        <!-- 蓝牙设备列表将动态生成 -->
+                    </div>
+                    <div class="step-actions">
+                        <button class="btn btn-primary" onclick="startBind()" id="bindBtn" disabled>开始绑定</button>
+                        <button class="btn btn-secondary" onclick="manualBind()" id="manualBindBtn" disabled>手动绑定</button>
+                    </div>
+                    <div class="progress-info" id="bindProgress" style="display: none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="bindProgressFill"></div>
+                        </div>
+                        <div class="progress-text" id="bindProgressText">绑定中...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 步骤4: 还原数据 -->
+            <div class="step-card" id="step4">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <h3>还原数据</h3>
+                    <div class="step-status" id="status4">等待中</div>
+                </div>
+                <div class="step-content">
+                    <!-- 钥匙信息摘要 -->
+                    <div class="keys-summary" id="keysSummary" style="display: none;">
+                        <div class="summary-text">
+                            钥匙信息：房东钥匙 <span id="restoreLandlordKeys">3</span> 个，用户钥匙 <span id="restoreUserKeys">5</span> 个，共管员钥匙 <span id="restoreAdminKeys">2</span> 个
+                        </div>
+                    </div>
+                    <div class="step-actions">
+                        <button class="btn btn-primary" onclick="startRestore()" id="restoreBtn" disabled>开始还原</button>
+                    </div>
+                    <div class="progress-info" id="restoreProgress" style="display: none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="restoreProgressFill"></div>
+                        </div>
+                        <div class="progress-text" id="restoreProgressText">还原中...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 完成操作 -->
+        <div class="completion-section" id="completionSection" style="display: none;">
+            <div class="success-message">
+                <div class="success-icon">✓</div>
+                <h3>换锁完成</h3>
+                <p>所有步骤已成功完成，新锁已正常工作</p>
+            </div>
+            <div class="completion-actions">
+                <button class="btn btn-primary" onclick="window.history.back()">返回工单</button>
+            </div>
+        </div>
+
+        <!-- 继续换锁按钮 -->
+        <div class="continue-section" id="continueSection" style="display: none;">
+            <button class="btn btn-outline" onclick="startNewReplacement()">继续换锁</button>
+        </div>
+    </div>
+
+    <!-- 加载动画 -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">处理中...</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
