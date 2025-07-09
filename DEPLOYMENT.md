@@ -13,14 +13,14 @@
 ### 1. 创建 GitHub 仓库
 
 1. 登录 GitHub，创建新仓库
-2. 仓库名建议：`smart-lock-replacement`
+2. 仓库名建议：`smart-lock-tool`
 3. 设置为 Public（GitHub Pages 免费版需要公开仓库）
 
 ### 2. 上传项目文件
 
 将以下文件上传到仓库根目录：
 ```
-smart-lock-replacement/
+smart-lock-tool/
 ├── index.html
 ├── styles.css
 ├── script.js
@@ -40,7 +40,7 @@ smart-lock-replacement/
 ### 4. 验证部署
 
 - 推送代码后，GitHub Actions 会自动运行
-- 部署完成后，访问：`https://yourusername.github.io/smart-lock-replacement`
+- 部署完成后，访问：`https://putonggongji.github.io/smart-lock-tool`
 
 ## 🌐 第二步：Cloudflare 配置
 
@@ -56,7 +56,7 @@ smart-lock-replacement/
 如果使用自定义域名：
 1. 添加 CNAME 记录：
    - Name: `@` 或 `www`
-   - Target: `yourusername.github.io`
+   - Target: `putonggongji.github.io`
    - Proxy status: 启用（橙色云朵）
 
 如果使用 GitHub Pages 域名：
@@ -173,7 +173,7 @@ curl -I https://yourdomain.com
 
 - [GitHub Pages 文档](https://docs.github.com/en/pages)
 - [Cloudflare 文档](https://developers.cloudflare.com/)
-- [项目 Issues](https://github.com/yourusername/smart-lock-replacement/issues)
+- [项目 Issues](https://github.com/putonggongji/smart-lock-tool/issues)
 
 ---
 

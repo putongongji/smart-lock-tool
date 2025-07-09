@@ -379,7 +379,25 @@ function executeRestoreSubSteps(progressFill, progressText, progressInfo, keysSu
 }
 
 function startNewReplacement() {
-    if (confirm('确定要开始新的换锁流程吗？这将重置当前进度。')) {
+    if (confirm('确定要开始新的换锁流程吗？这将重置当前进度并生成新的锁信息。')) {
+        // 备注旧锁信息
+        const oldLockInfo = {
+            serialNumber: currentLockSN,
+            deviceId: currentDeviceId,
+            model: currentLockModel,
+            location: currentLocation,
+            replacedAt: new Date().toLocaleString('zh-CN')
+        };
+        
+        // 生成新的锁信息
+        currentLockSN = 'SL' + Date.now().toString().slice(-6);
+        currentDeviceId = 'DEV_' + Math.random().toString(36).substr(2, 9).toUpperCase();
+        currentLockModel = '智能锁 Pro Max';
+        currentLocation = '朝阳区某小区1-101';
+        
+        // 显示旧锁信息备注
+        showAlert('success', `旧锁已备注：${oldLockInfo.serialNumber} (${oldLockInfo.replacedAt})`);
+        
         // 更新页面显示的当前锁信息
         updateCurrentLockDisplay();
         
@@ -426,10 +444,37 @@ function startNewReplacement() {
         document.getElementById('newDeviceId').value = '';
         document.getElementById('deviceList').style.display = 'none';
         
+        // 重置进度条和进度文本
+        const progressBars = document.querySelectorAll('.progress-fill');
+        progressBars.forEach(bar => {
+            bar.style.width = '0%';
+        });
+        
+        // 重置所有进度文本
+        const progressTexts = [
+            'backupProgressText',
+            'unbindProgressText', 
+            'bindProgressText',
+            'restoreProgressText'
+        ];
+        progressTexts.forEach(textId => {
+            const textElement = document.getElementById(textId);
+            if (textElement) {
+                textElement.textContent = '';
+            }
+        });
+        
+        // 重置进度信息容器的样式
+        const progressInfos = document.querySelectorAll('.progress-info');
+        progressInfos.forEach(info => {
+            info.style.background = '';
+            info.style.borderColor = '';
+        });
+        
         // 设置第一步为活动状态
         updateStepStatus(1, 'active');
         
-        showAlert('info', '已开始新的换锁流程');
+        showAlert('info', `已开始新的换锁流程，新锁序列号：${currentLockSN}`);
     }
 }
 
