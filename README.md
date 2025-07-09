@@ -4,7 +4,7 @@
 
 ## 🚀 在线演示
 
-- **GitHub Pages**: [https://your-github-username.github.io/smart-lock-replacement](https://your-github-username.github.io/smart-lock-replacement)
+- **GitHub Pages**: [https://your-github-username.github.io/smart-lock-tools](https://your-github-username.github.io/smart-lock-tools)
 - **本地预览**: `http://localhost:8000`
 
 ## 📦 快速部署
@@ -17,8 +17,8 @@
 
 ```bash
 # 克隆项目
-git clone https://github.com/your-github-username/smart-lock-replacement.git
-cd smart-lock-replacement
+git clone https://github.com/your-github-username/smart-lock-tools.git
+cd smart-lock-tools
 
 # 启动本地服务器
 python3 -m http.server 8000
@@ -46,7 +46,7 @@ npx serve .
 ## 📁 项目结构
 
 ```
-smart-lock-replacement/
+smart-lock-tools/
 ├── index.html          # 主页面
 ├── styles.css          # 样式文件
 ├── script.js           # 交互逻辑
@@ -61,7 +61,7 @@ smart-lock-replacement/
 ## 文件结构
 
 ```
-smart-lock-replacement/
+smart-lock-tools/
 ├── index.html          # 主页面
 ├── styles.css          # 样式文件
 ├── script.js           # 交互逻辑
