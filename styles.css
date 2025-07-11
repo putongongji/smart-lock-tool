@@ -253,6 +253,74 @@ body {
     }
 }
 
+/* 步骤提示语 */
+.step-tip {
+    margin-bottom: 16px;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border: 1px solid #f59e0b;
+    border-radius: 12px;
+    border-left: 4px solid #f59e0b;
+}
+
+.tip-text {
+    font-size: 14px;
+    color: #92400e;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 绑定成功信息 */
+.bind-success-info {
+    margin-top: 16px;
+    padding: 16px;
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+    border: 1px solid #4ade80;
+    border-radius: 12px;
+    border-left: 4px solid #10b981;
+}
+
+.success-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #065f46;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.device-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.device-info .info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    border: 1px solid #bbf7d0;
+}
+
+.device-info .info-label {
+    font-size: 13px;
+    color: #047857;
+    font-weight: 500;
+}
+
+.device-info .info-value {
+    font-size: 14px;
+    color: #065f46;
+    font-weight: 600;
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+}
+
 /* 钥匙数量显示 */
 .key-count {
     display: flex;

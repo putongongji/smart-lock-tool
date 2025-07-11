@@ -54,6 +54,9 @@
                     <div class="step-status" id="status1">待执行</div>
                 </div>
                 <div class="step-content">
+                    <div class="step-tip">
+                        <span class="tip-text">💡 备份数据用于更换门锁后恢复用户数据</span>
+                    </div>
                     <div class="backup-info">
                         <div class="key-count">
                             <div class="count-item">
@@ -90,6 +93,9 @@
                     <div class="step-status" id="status2">等待中</div>
                 </div>
                 <div class="step-content">
+                    <div class="step-tip">
+                        <span class="tip-text">⚠️ 解绑将清空门锁数据</span>
+                    </div>
                     <div class="step-actions">
                         <button class="btn btn-primary" onclick="startUnbind()" id="unbindBtn" disabled>开始解绑</button>
                     </div>
@@ -129,13 +135,26 @@
                     </div>
                     <div class="step-actions">
                         <button class="btn btn-primary" onclick="startBind()" id="bindBtn" disabled>开始绑定</button>
-                        <button class="btn btn-secondary" onclick="manualBind()" id="manualBindBtn" disabled>手动绑定</button>
                     </div>
                     <div class="progress-info" id="bindProgress" style="display: none;">
                         <div class="progress-bar">
                             <div class="progress-fill" id="bindProgressFill"></div>
                         </div>
                         <div class="progress-text" id="bindProgressText">绑定中...</div>
+                    </div>
+                    <!-- 绑定成功后显示的设备信息 -->
+                    <div class="bind-success-info" id="bindSuccessInfo" style="display: none;">
+                        <div class="success-title">✅ 绑定成功</div>
+                        <div class="device-info">
+                            <div class="info-item">
+                                <span class="info-label">设备ID:</span>
+                                <span class="info-value" id="boundDeviceId"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">序列号:</span>
+                                <span class="info-value" id="boundSerialNumber"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

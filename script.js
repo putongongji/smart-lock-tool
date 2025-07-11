@@ -141,14 +141,11 @@ function checkBindRequirements() {
     const newLockSN = document.getElementById('newLockSerial').value;
     const deviceId = document.getElementById('newDeviceId').value;
     const bindBtn = document.getElementById('bindBtn');
-    const manualBindBtn = document.getElementById('manualBindBtn');
     
     if (newLockSN && deviceId) {
         bindBtn.disabled = false;
-        manualBindBtn.disabled = false;
     } else {
         bindBtn.disabled = true;
-        manualBindBtn.disabled = true;
     }
 }
 
@@ -181,6 +178,10 @@ function startBackup() {
             progressInfo.style.background = 'linear-gradient(135deg, #f0fdf4, #dcfce7)';
             progressInfo.style.borderColor = '#4ade80';
             
+            // 隐藏按钮
+            const stepActions = document.querySelector('#step1 .step-actions');
+            stepActions.style.display = 'none';
+            
             completedSteps.push(1);
             updateStepStatus(1, 'completed');
             moveToNextStep();
@@ -209,6 +210,10 @@ function startUnbind() {
             progressText.textContent = '✅ 旧锁解绑成功！';
             progressInfo.style.background = 'linear-gradient(135deg, #f0fdf4, #dcfce7)';
             progressInfo.style.borderColor = '#4ade80';
+            
+            // 隐藏按钮
+            const stepActions = document.querySelector('#step2 .step-actions');
+            stepActions.style.display = 'none';
             
             completedSteps.push(2);
             updateStepStatus(2, 'completed');
@@ -254,6 +259,22 @@ function startBind() {
                 currentLockModel = selectedDevice.name;
             }
             
+            // 显示绑定成功信息
+            if (selectedDevice) {
+                document.getElementById('boundDeviceId').textContent = deviceId;
+                document.getElementById('boundSerialNumber').textContent = newLockSN;
+                document.getElementById('bindSuccessInfo').style.display = 'block';
+            }
+            
+            // 隐藏按钮和设备列表
+            const stepActions = document.querySelector('#step3 .step-actions');
+            stepActions.style.display = 'none';
+            const deviceList = document.getElementById('deviceList');
+            deviceList.style.display = 'none';
+            // 隐藏输入组
+            const inputGroups = document.querySelectorAll('#step3 .input-group');
+            inputGroups.forEach(group => group.style.display = 'none');
+            
             completedSteps.push(3);
             updateStepStatus(3, 'completed');
             moveToNextStep();
@@ -261,9 +282,7 @@ function startBind() {
     }, 250);
 }
 
-function manualBind() {
-    showAlert('info', '请按照设备说明书进行手动绑定操作');
-}
+// 手动绑定功能已移除
 
 function startRestore() {
     if (!backupData) {
@@ -334,6 +353,10 @@ function executeRestoreSubSteps(progressFill, progressText, progressInfo, keysSu
             progressText.textContent = `✅ 数据还原完成！已恢复 ${totalKeys} 个钥匙权限`;
             progressInfo.style.background = 'linear-gradient(135deg, #f0fdf4, #dcfce7)';
             progressInfo.style.borderColor = '#4ade80';
+            
+            // 隐藏按钮
+            const stepActions = document.querySelector('#step4 .step-actions');
+            stepActions.style.display = 'none';
             
             completedSteps.push(4);
             updateStepStatus(4, 'completed');
@@ -432,11 +455,26 @@ function startNewReplacement() {
                 progressInfo.style.display = 'none';
             }
             
-            // 重置按钮状态
+            // 重置按钮状态和显示
+            const stepActions = document.querySelector(`#step${i} .step-actions`);
+            if (stepActions) {
+                stepActions.style.display = 'block';
+            }
             const buttons = document.querySelectorAll(`#step${i} button`);
             buttons.forEach(btn => {
                 btn.disabled = i !== 1;
             });
+            
+            // 重置输入组显示（针对步骤3）
+            if (i === 3) {
+                const inputGroups = document.querySelectorAll('#step3 .input-group');
+                inputGroups.forEach(group => group.style.display = 'block');
+                // 隐藏绑定成功信息
+                const bindSuccessInfo = document.getElementById('bindSuccessInfo');
+                if (bindSuccessInfo) {
+                    bindSuccessInfo.style.display = 'none';
+                }
+            }
         }
         
         // 清空输入框
